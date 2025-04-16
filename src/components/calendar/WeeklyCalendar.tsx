@@ -67,31 +67,32 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
   };
 
   return (
-    <div className='max-w-4xl mx-auto p-4'>
-      <div className='flex justify-between items-center mb-6'>
+    <div className='max-w-4xl mx-auto p-2 md:p-4'>
+      {/* Navigation */}
+      <div className='flex flex-col sm:flex-row justify-between items-center gap-4 mb-6'>
         <button
           onClick={handlePreviousMonth}
-          className='p-3 bg-[#D40511] w-32 text-white rounded-lg font-bold uppercase hover:bg-[#FFCC00] hover:text-[#D40511] transition-all duration-300 transform hover:scale-105 shadow-lg'
+          className='w-full sm:w-32 p-2 md:p-3 bg-[#D40511] text-white rounded-lg font-bold uppercase hover:bg-[#FFCC00] hover:text-[#D40511] transition-all duration-300 transform hover:scale-105 shadow-lg text-sm md:text-base'
         >
           Previous
         </button>
-        <h2 className='text-2xl font-black text-[#D40511] bg-[#FFCC00] px-6 py-2 rounded-lg transform -rotate-1 hover:rotate-0 transition-transform border-2 border-white shadow-lg'>
-          {format(currentMonth, 'MMMM yyyy')}
+        <h2 className='text-xl md:text-2xl font-black text-[#D40511] bg-[#FFCC00] px-4 md:px-6 py-2 rounded-lg transform -rotate-1 hover:rotate-0 transition-transform border-2 border-white shadow-lg'>
+          {format(currentMonth, 'MMM yyyy')}
         </h2>
         <button
           onClick={handleNextMonth}
-          className='p-3 bg-[#D40511] w-32 text-white rounded-lg font-bold uppercase hover:bg-[#FFCC00] hover:text-[#D40511] transition-all duration-300 transform hover:scale-105 shadow-lg'
+          className='w-full sm:w-32 p-2 md:p-3 bg-[#D40511] text-white rounded-lg font-bold uppercase hover:bg-[#FFCC00] hover:text-[#D40511] transition-all duration-300 transform hover:scale-105 shadow-lg text-sm md:text-base'
         >
           Next
         </button>
       </div>
 
       {/* Days of Week Header */}
-      <div className='grid grid-cols-7 gap-2 mb-2'>
-        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
+      <div className='grid grid-cols-7 gap-1 md:gap-2 mb-2'>
+        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day) => (
           <div
             key={day}
-            className='p-2 text-center font-black text-[#D40511] bg-[#FFCC00] rounded-lg shadow-md uppercase'
+            className='p-1 md:p-2 text-center font-black text-[#D40511] bg-[#FFCC00] rounded-lg shadow-md uppercase text-xs md:text-base'
           >
             {day}
           </div>
@@ -99,11 +100,11 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
       </div>
 
       {/* Calendar Grid */}
-      <div className='grid grid-cols-7 gap-2'>
+      <div className='grid grid-cols-7 gap-1 md:gap-2'>
         {dates.map(({ date, isOffDay, isSunday }, index) => (
           <div
             key={index}
-            className={`p-4 rounded-lg text-center transition-all duration-300 hover:scale-105 shadow-lg border-2 ${
+            className={`p-2 md:p-4 rounded-lg text-center transition-all duration-300 hover:scale-105 shadow-lg border-2 ${
               isOffDay
                 ? 'bg-[#FFCC00] text-[#D40511] border-[#D40511] font-black'
                 : isSunday
@@ -111,9 +112,9 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
                 : 'bg-white text-[#D40511] border-[#FFCC00]'
             }`}
           >
-            <div className='text-lg font-bold'>{format(date, 'd')}</div>
-            <div className='text-xs mt-1 font-bold'>
-              {isOffDay ? 'OFF' : isSunday ? 'SUNDAY' : 'WORK'}
+            <div className='text-base md:text-lg font-bold'>{format(date, 'd')}</div>
+            <div className='text-[10px] md:text-xs mt-1 font-bold'>
+              {isOffDay ? 'OFF' : isSunday ? 'SUN' : 'WORK'}
             </div>
           </div>
         ))}

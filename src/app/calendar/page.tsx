@@ -21,29 +21,29 @@ const DayOffCalendar = () => {
   }, [router]);
 
   return (
-    <div className='bg-slate-200'>
-      <h1 className='text-red-800 font-extrabold justify-center text-center uppercase py-4 text-4xl decoration-red-800 md:text-6xl'>
+    <div className='min-h-screen bg-slate-200 px-4 py-6 md:px-8'>
+      <h1 className='text-[#D40511] font-extrabold text-center uppercase py-4 text-3xl md:text-5xl lg:text-6xl mb-4'>
         Day Off Calendar
       </h1>
 
-      <div className='justify-center text-center mx-3'>
-        <h2 className='text-red-800 font-extrabold uppercase py-4 text-3xl decoration-red-800'>
+      <div className='max-w-lg mx-auto text-center mb-8'>
+        <h2 className='text-[#D40511] font-extrabold uppercase py-2 md:py-4 text-2xl md:text-3xl mb-4'>
           My Group
         </h2>
 
-        <p className='font-bold text-2xl'>
-          Find your group in your (
-          <span className='text-red-800 bg-yellow-500 font-extrabold rounded'>
+        <p className='font-bold text-lg md:text-2xl mb-6'>
+          Find your group in your
+          <span className='text-[#D40511] bg-[#FFCC00] font-extrabold rounded-lg px-3 py-1 mx-2 inline-block transform -rotate-1'>
             DHL
           </span>
-          ) badge number.
+          badge number.
         </p>
 
-        <div className='mt-10 border-8 border-black bg-yellow-500'>
-          <h3 className='font-extrabold text-red-800 text-3xl uppercase'>
+        <div className='bg-[#FFCC00] rounded-lg p-4 md:p-6 shadow-lg transform hover:scale-[1.02] transition-all duration-300'>
+          <h3 className='font-extrabold text-[#D40511] text-xl md:text-3xl uppercase mb-2'>
             Important
           </h3>
-          <p className='font-extrabold text-2xl'>
+          <p className='font-bold text-lg md:text-2xl text-[#D40511]'>
             Please check your calendar regularly for any updates or changes.
           </p>
         </div>
