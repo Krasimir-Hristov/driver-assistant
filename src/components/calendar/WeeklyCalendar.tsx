@@ -110,7 +110,7 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
                   ? 'bg-[#22C55E] text-white border-[#D40511] font-black transform -rotate-1 hover:rotate-0'
                   : isSunday
                   ? 'bg-gray-100 text-gray-500 border-gray-300'
-                  : 'bg-white text-[#D40511] border-[#FFCC00] hover:border-[#D40511]'
+                  : 'bg-[#FFCC00] text-[#D40511] border-[#D40511] hover:border-[#D40511]'
               }`}
             >
               <div className='text-base sm:text-lg md:text-xl lg:text-2xl font-black'>{format(date, 'd')}</div>
