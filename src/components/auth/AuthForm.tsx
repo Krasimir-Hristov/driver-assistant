@@ -65,13 +65,10 @@ export function AuthForm() {
         if (signUpError) throw signUpError;
       }
 
-      if (isSignIn) {
-        router.push('/authorized');
-      } else {
-        router.push('/');
-      }
+      router.push('/');
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An error occurred');
+      console.error('Auth error:', error);
     } finally {
       setIsLoading(false);
     }
