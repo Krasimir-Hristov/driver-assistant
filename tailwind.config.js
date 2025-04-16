@@ -17,6 +17,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        white: "#ffffff",
         dhl: {
           red: '#D40511',
           yellow: '#FFCC00',
@@ -77,5 +78,9 @@ module.exports = {
       },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
+  corePlugins: {
+    preflight: true,
+  },
 }
