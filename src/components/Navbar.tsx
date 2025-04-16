@@ -40,16 +40,6 @@ export function Navbar() {
           </Link>
         </div>
         <div className='flex items-center flex-1'>
-          <div className='flex space-x-4'>
-            <Button variant='ghost' asChild className='text-white hover:text-[#D40511] hover:bg-[#FFCC00] font-bold uppercase cursor-pointer transition-all duration-300'>
-              <Link href='/'>Home</Link>
-            </Button>
-            {isAuthenticated && (
-              <Button variant='ghost' asChild className='text-white hover:text-[#D40511] hover:bg-[#FFCC00] font-bold uppercase cursor-pointer transition-all duration-300'>
-                <Link href='/calendar'>Calendar</Link>
-              </Button>
-            )}
-          </div>
           <div className='flex-1'></div>
           {!isAuthenticated ? (
             <Button variant='ghost' asChild className='bg-[#FFCC00] text-[#D40511] hover:bg-white font-black uppercase cursor-pointer transition-all duration-300 px-6 transform hover:scale-105'>
