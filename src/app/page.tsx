@@ -15,7 +15,7 @@ export default function Home() {
         <div className='absolute inset-0 bg-gradient-to-br from-[#D40511] to-[#FFCC00] opacity-90'></div>
         <div className='relative container mx-auto px-4 pt-16 pb-24 sm:pt-24 sm:pb-32'>
           <div className='text-center space-y-8 relative z-10'>
-            <div className='inline-block bg-[#FFCC00] p-4 rounded-lg shadow-lg mb-6 transform -rotate-2 border-4 border-white'>
+            <div className='inline-block bg-[#FFCC00] p-4 rounded-lg shadow-lg mb-6 transition-all duration-300 transform hover:-rotate-2 border-4 border-white'>
               <h2 className='text-[#D40511] text-3xl font-black uppercase'>DHL Driver Assistant</h2>
             </div>
             <h1 className='text-5xl sm:text-7xl font-black tracking-tight text-white animate-fade-in uppercase'>
@@ -27,7 +27,7 @@ export default function Home() {
             </p>
             <div className='flex justify-center gap-4 pt-4'>
               <Link href='/auth'>
-                <Button size='lg' className='text-xl px-12 py-6 hover:scale-105 transition-transform bg-dhl-yellow hover:bg-white text-dhl-red font-black uppercase shadow-xl'>
+                <Button size='lg' className='text-xl px-12 py-6 hover:scale-105 transition-all duration-300 bg-[#FFCC00] hover:bg-white text-[#D40511] font-black uppercase shadow-xl cursor-pointer'>
                   Get Started Now
                 </Button>
               </Link>
@@ -44,7 +44,7 @@ export default function Home() {
           </div>
 
           <div className='bg-[#D40511] p-8 rounded-lg shadow-2xl transition-all duration-300 hover:scale-105 group transform -rotate-1'>
-            <div className='absolute top-0 left-0 w-full h-2 bg-dhl-yellow transform origin-left scale-x-0 transition-transform group-hover:scale-x-100'></div>
+            <div className='absolute top-0 left-0 w-full h-2 bg-[#FFCC00] transform origin-left scale-x-0 transition-transform group-hover:scale-x-100'></div>
             <div className='flex items-center gap-4 mb-4'>
               <div className='p-3 bg-[#FFCC00] rounded-lg transform rotate-3'>
                 <Route className='w-8 h-8 text-[#D40511]' />
@@ -55,10 +55,10 @@ export default function Home() {
           </div>
 
           <div className='bg-[#D40511] p-8 rounded-lg shadow-2xl transition-all duration-300 hover:scale-105 group transform rotate-1'>
-            <div className='absolute top-0 left-0 w-full h-2 bg-dhl-yellow transform origin-left scale-x-0 transition-transform group-hover:scale-x-100'></div>
+            <div className='absolute top-0 left-0 w-full h-2 bg-[#FFCC00] transform origin-left scale-x-0 transition-transform group-hover:scale-x-100'></div>
             <div className='flex items-center gap-4 mb-4'>
               <div className='p-3 bg-[#FFCC00] rounded-lg transform -rotate-3'>
-                <PiggyBank className='w-8 h-8 text-dhl-red' />
+                <PiggyBank className='w-8 h-8 text-[#D40511]' />
               </div>
               <h3 className='text-2xl font-black text-white uppercase'>Expense Management</h3>
             </div>
@@ -66,10 +66,10 @@ export default function Home() {
           </div>
 
           <div className='bg-[#D40511] p-8 rounded-lg shadow-2xl transition-all duration-300 hover:scale-105 group transform -rotate-1'>
-            <div className='absolute top-0 left-0 w-full h-2 bg-dhl-yellow transform origin-left scale-x-0 transition-transform group-hover:scale-x-100'></div>
+            <div className='absolute top-0 left-0 w-full h-2 bg-[#FFCC00] transform origin-left scale-x-0 transition-transform group-hover:scale-x-100'></div>
             <div className='flex items-center gap-4 mb-4'>
               <div className='p-3 bg-[#FFCC00] rounded-lg transform rotate-3'>
-                <BarChart3 className='w-8 h-8 text-dhl-red' />
+                <BarChart3 className='w-8 h-8 text-[#D40511]' />
               </div>
               <h3 className='text-2xl font-black text-white uppercase'>Performance Analytics</h3>
             </div>
@@ -77,10 +77,10 @@ export default function Home() {
           </div>
 
           <div className='bg-[#D40511] p-8 rounded-lg shadow-2xl transition-all duration-300 hover:scale-105 group transform rotate-1'>
-            <div className='absolute top-0 left-0 w-full h-2 bg-dhl-yellow transform origin-left scale-x-0 transition-transform group-hover:scale-x-100'></div>
+            <div className='absolute top-0 left-0 w-full h-2 bg-[#FFCC00] transform origin-left scale-x-0 transition-transform group-hover:scale-x-100'></div>
             <div className='flex items-center gap-4 mb-4'>
               <div className='p-3 bg-[#FFCC00] rounded-lg transform -rotate-3'>
-                <Car className='w-8 h-8 text-dhl-red' />
+                <Car className='w-8 h-8 text-[#D40511]' />
               </div>
               <h3 className='text-2xl font-black text-white uppercase'>Vehicle Management</h3>
             </div>
@@ -95,7 +95,7 @@ export default function Home() {
           <h2 className='text-4xl font-black text-white mb-6 uppercase'>Ready to Optimize Your Routes?</h2>
           <p className='text-xl text-white mb-8 font-medium'>Join the DHL driver community and make your deliveries more efficient.</p>
           <Link href='/auth'>
-            <Button size='lg' className='bg-white hover:bg-dhl-yellow text-dhl-red font-black text-xl px-12 py-6 uppercase transform hover:scale-105 transition-all duration-300 shadow-2xl'>
+            <Button size='lg' className='bg-white hover:bg-[#FFCC00] text-[#D40511] font-black text-xl px-12 py-6 uppercase transform hover:scale-105 transition-all duration-300 shadow-2xl cursor-pointer'>
               Start Your Journey
             </Button>
           </Link>

@@ -30,27 +30,31 @@ export function Navbar() {
   };
 
   return (
-    <nav className='border-b bg-white shadow-sm'>
+    <nav className='bg-[#D40511] sticky top-0 z-50'>
+      <div className='h-1 bg-[#FFCC00]'></div>
       <div className='flex h-16 items-center px-4 container mx-auto'>
-        <div className='mr-4 font-bold'>
-          <Link href='/' className='text-dhl-red hover:text-dhl-red/90 flex items-center gap-2'>
-            <span className='text-2xl font-bold'>DHL</span>
-            <span className='text-dhl-gray'>Driver Assistant</span>
+        <div className='mr-8 font-bold'>
+          <Link href='/' className='flex items-center gap-3 group'>
+            <div className='bg-[#FFCC00] text-[#D40511] px-4 py-2 rounded font-black text-2xl transform -rotate-2 group-hover:rotate-0 transition-transform border-2 border-white'>DHL</div>
+            <span className='text-white font-bold hidden sm:inline text-xl uppercase'>Driver Assistant</span>
           </Link>
         </div>
-        <div className='flex space-x-2'>
-          <Button variant='ghost' asChild className='text-dhl-gray hover:text-dhl-red hover:bg-dhl-red/10'>
-            <Link href='/'>Home</Link>
-          </Button>
-          <Button variant='ghost' asChild className='text-dhl-gray hover:text-dhl-red hover:bg-dhl-red/10'>
-            <Link href='/authorized'>Authorized</Link>
-          </Button>
+        <div className='flex items-center flex-1'>
+          <div className='flex space-x-4'>
+            <Button variant='ghost' asChild className='text-white hover:text-[#D40511] hover:bg-[#FFCC00] font-bold uppercase cursor-pointer transition-all duration-300'>
+              <Link href='/'>Home</Link>
+            </Button>
+            <Button variant='ghost' asChild className='text-white hover:text-[#D40511] hover:bg-[#FFCC00] font-bold uppercase cursor-pointer transition-all duration-300'>
+              <Link href='/authorized'>Dashboard</Link>
+            </Button>
+          </div>
+          <div className='flex-1'></div>
           {!isAuthenticated ? (
-            <Button variant='ghost' asChild className='text-dhl-gray hover:text-dhl-red hover:bg-dhl-red/10'>
-              <Link href='/auth'>SignIN-SignUp</Link>
+            <Button variant='ghost' asChild className='bg-[#FFCC00] text-[#D40511] hover:bg-white font-black uppercase cursor-pointer transition-all duration-300 px-6 transform hover:scale-105'>
+              <Link href='/auth'>Sign In</Link>
             </Button>
           ) : (
-            <Button variant='ghost' onClick={handleLogout} className='text-dhl-gray hover:text-dhl-red hover:bg-dhl-red/10'>
+            <Button variant='ghost' onClick={handleLogout} className='bg-white text-[#D40511] hover:bg-[#FFCC00] font-black uppercase cursor-pointer transition-all duration-300 px-6 transform hover:scale-105'>
               Sign Out
             </Button>
           )}
