@@ -44,9 +44,7 @@ export function Navbar() {
             <Button variant='ghost' asChild className='text-white hover:text-[#D40511] hover:bg-[#FFCC00] font-bold uppercase cursor-pointer transition-all duration-300'>
               <Link href='/'>Home</Link>
             </Button>
-            <Button variant='ghost' asChild className='text-white hover:text-[#D40511] hover:bg-[#FFCC00] font-bold uppercase cursor-pointer transition-all duration-300'>
-              <Link href='/authorized'>Dashboard</Link>
-            </Button>
+           
           </div>
           <div className='flex-1'></div>
           {!isAuthenticated ? (
