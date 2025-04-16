@@ -72,44 +72,16 @@ const DayOffCalendar = () => {
       </div>
 
       {/* Important Notice */}
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 mb-12 relative z-20'>
-        <div className='bg-[#FFCC00] rounded-lg p-6 shadow-2xl transform hover:scale-[1.02] transition-all duration-300 border-4 border-white'>
-          <div className='flex items-center justify-center gap-4 mb-4'>
-            <div className='p-3 bg-white rounded-lg transform rotate-3'>
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-8 w-8 text-[#D40511]' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' />
-              </svg>
-            </div>
-            <h3 className='text-2xl md:text-3xl font-black text-[#D40511] uppercase'>Important Notice</h3>
-          </div>
-          <p className='text-lg md:text-xl font-bold text-[#D40511] text-center'>
-            Please check your calendar regularly for any schedule updates or changes.
-          </p>
-        </div>
-      </div>
 
-      <div className='flex flex-col items-center justify-center min-h-screen text-center px-4 pt-12 md:pt-0 bg-slate-200'>
-        <div className='mt-5 border-black p-2 border-8'>
-          <h1 className='font-bold text-2xl md:text-4xl border-b-4 border-red-500 pb-2'>
-            Check Your Days Off
-          </h1>
-          <h2 className='text-xl font-bold mt-5'>Choose Your Group</h2>
-          <div className='flex flex-row p-3 justify-center items-center mt-4 gap-3 border-b-4 border-yellow-500 md:gap-5 font-semibold'>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((week) => (
-              <p
-                key={week}
-                onClick={() => setStartWeek(week)}
-                className={`p-1 md:p-2 border-2 border-black rounded-md cursor-pointer ${
-                  startWeek === week ? 'bg-green-500' : 'bg-white'
-                }`}
-                style={{ minWidth: '1.5rem', textAlign: 'center' }}
-              >
-                {week}
-              </p>
-            ))}
-          </div>
 
-          <WeeklyCalendar startWeek={startWeek} />
+      {/* Calendar Section */}
+      <div className='relative min-h-screen pb-24'>
+        <div className='absolute inset-0 bg-gradient-to-b from-[#D40511] via-white to-[#D40511] opacity-10'></div>
+        
+        <div className='relative z-10 flex flex-col items-center justify-center px-4 pt-8'>
+          <div className='w-full max-w-7xl'>
+            <WeeklyCalendar startWeek={startWeek} />
+          </div>
         </div>
       </div>
     </div>
