@@ -7,23 +7,12 @@ import {
   CardContent,
 } from '@/components/ui/card';
 import Link from 'next/link';
+import { AuthForm } from '@/components/auth/AuthForm';
 
 export default function Home() {
   return (
-    <main className='min-h-screen p-24'>
-      <Card className='max-w-md mx-auto'>
-        <CardHeader>
-          <CardTitle>Welcome to Driver Assistant</CardTitle>
-          <CardDescription>
-            Your Next.js app with Shadcn UI is ready!
-          </CardDescription>
-        </CardHeader>
-        <CardContent className='space-y-4'>
-          <Button asChild>
-            <Link href='/authorized'>Go to Authorized Area</Link>
-          </Button>
-        </CardContent>
-      </Card>
+    <main className='min-h-screen flex items-center justify-center p-24'>
+      <AuthForm />
     </main>
   );
 }
