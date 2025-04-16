@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { weekOffDays } from '@/constants';
+import { DayType } from '@/types/calendar';
+import DayModificationModal from './DayModificationModal';
 import {
   format,
   addDays,
@@ -20,6 +22,9 @@ type Props = {
 
 const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dayModifications, setDayModifications] = useState<Record<string, DayType>>({});
 
   const calculateWeekNumber = (
     startWeek: number,
@@ -46,10 +51,13 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
       const isOffDay = offDays.includes(dayOfWeek);
       const isSunday = dayOfWeek === 0;
 
+      const dateStr = format(currentDate, 'yyyy-MM-dd');
+      const modification = dayModifications[dateStr];
+      const dayType: DayType = isSunday ? 'off' : (modification || (isOffDay ? 'off' : 'work'));
+
       dates.push({
         date: currentDate,
-        isOffDay,
-        isSunday,
+        dayType,
       });
 
       currentDate = addDays(currentDate, 1);
@@ -107,27 +115,56 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
 
         {/* Calendar Grid */}
         <div className='grid grid-cols-7 gap-1 sm:gap-2 md:gap-4'>
-          {dates.map(({ date, isOffDay, isSunday }, index) => (
+          {dates.map(({ date, dayType }, index) => (
             <div
               key={index}
-              className={`p-1.5 sm:p-2 md:p-4 rounded-lg text-center transition-all duration-300 hover:scale-105 shadow-lg border-2 md:border-4 ${
-                isOffDay
-                  ? 'bg-[#22C55E] text-white border-[#D40511] font-black transform -rotate-1 hover:rotate-0'
-                  : isSunday
-                  ? 'bg-gray-100 text-gray-500 border-gray-300'
-                  : 'bg-[#FFCC00] text-[#D40511] border-[#D40511] hover:border-[#D40511]'
+              onClick={() => {
+                const dayOfWeek = getDay(date);
+                if (dayOfWeek !== 0) { // Не позволяваме промяна на неделите
+                  setSelectedDate(date);
+                  setIsModalOpen(true);
+                }
+              }}
+              className={`p-1.5 sm:p-2 md:p-4 rounded-lg text-center transition-all duration-300 hover:scale-105 shadow-lg border-2 md:border-4 ${getDay(date) === 0 ? '' : 'cursor-pointer'} ${
+                getDay(date) === 0 ? 'bg-gray-100 text-gray-500 border-gray-300' :
+                dayType === 'work' ? 'bg-[#FFCC00] text-[#D40511] border-[#D40511]' :
+                dayType === 'off' ? 'bg-[#22C55E] text-white border-[#D40511] font-black transform -rotate-1 hover:rotate-0' :
+                dayType === 'vacation' ? 'bg-blue-500 text-white border-[#D40511]' :
+                dayType === 'sick' ? 'bg-red-500 text-white border-[#D40511]' :
+                'bg-purple-500 text-white border-[#D40511]'
               }`}
             >
               <div style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }} className='font-black'>
                 {format(date, 'd')}
               </div>
               <div style={{ fontSize: 'clamp(0.5rem, 0.8vw, 0.75rem)' }} className='mt-0.5 sm:mt-1 md:mt-2 font-bold'>
-                {isOffDay ? 'DAY OFF' : isSunday ? 'SUNDAY' : 'WORK DAY'}
+                {getDay(date) === 0 ? 'SUNDAY' :
+                 dayType === 'work' ? 'WORK DAY' :
+                 dayType === 'off' ? 'DAY OFF' :
+                 dayType === 'vacation' ? 'VACATION' :
+                 dayType === 'sick' ? 'SICK LEAVE' :
+                 'ADD. VACATION'}
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {selectedDate && (
+        <DayModificationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSelect={(type) => {
+            const dateStr = format(selectedDate, 'yyyy-MM-dd');
+            setDayModifications(prev => ({
+              ...prev,
+              [dateStr]: type
+            }));
+          }}
+          currentDate={selectedDate}
+          currentType={dates.find(d => d.date.getTime() === selectedDate.getTime())?.dayType || 'work'}
+        />
+      )}
     </div>
   );
 };
