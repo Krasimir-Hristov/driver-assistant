@@ -28,7 +28,7 @@ export default function Home() {
     if (!isAuthenticated) {
       router.push('/auth');
     } else {
-      router.push('/authorized/calendar');
+      router.push('/calendar');
     }
   };
 
