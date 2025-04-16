@@ -107,7 +107,7 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
               key={index}
               className={`p-1.5 sm:p-2 md:p-4 rounded-lg text-center transition-all duration-300 hover:scale-105 shadow-lg border-2 md:border-4 ${
                 isOffDay
-                  ? 'bg-[#FFCC00] text-[#D40511] border-[#D40511] font-black transform -rotate-1 hover:rotate-0'
+                  ? 'bg-[#22C55E] text-white border-[#D40511] font-black transform -rotate-1 hover:rotate-0'
                   : isSunday
                   ? 'bg-gray-100 text-gray-500 border-gray-300'
                   : 'bg-white text-[#D40511] border-[#FFCC00] hover:border-[#D40511]'
