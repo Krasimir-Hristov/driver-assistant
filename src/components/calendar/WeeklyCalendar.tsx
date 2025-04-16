@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { weekOffDays } from '@/constants';
 import {
@@ -78,7 +80,7 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
             Prev
           </button>
           <h2 className='text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-[#D40511] bg-[#FFCC00] px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-lg transform -rotate-2 hover:rotate-0 transition-transform border-2 md:border-4 border-[#D40511] shadow-lg whitespace-nowrap'>
-            {format(currentMonth, window.innerWidth < 640 ? 'MMM yy' : 'MMMM yyyy')}
+            {format(currentMonth, 'MMMM yyyy')}
           </h2>
           <button
             onClick={handleNextMonth}
@@ -93,9 +95,12 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
             <div
               key={day}
-              className='p-1 sm:p-2 md:p-3 text-center font-black text-[#D40511] bg-[#FFCC00] rounded-lg shadow-lg uppercase text-[10px] sm:text-xs md:text-sm border border-[#D40511] sm:border-2 transform hover:scale-105 transition-transform duration-300'
+              className='p-1 sm:p-2 md:p-3 text-center font-black text-[#D40511] bg-[#FFCC00] rounded-lg shadow-lg uppercase border border-[#D40511] sm:border-2 transform hover:scale-105 transition-transform duration-300'
+              style={{
+                fontSize: 'clamp(0.625rem, 1vw, 0.875rem)'
+              }}
             >
-              {window.innerWidth < 640 ? day.charAt(0) : window.innerWidth < 768 ? day.slice(0, 2) : day}
+              {day}
             </div>
           ))}
         </div>
@@ -113,12 +118,11 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
                   : 'bg-[#FFCC00] text-[#D40511] border-[#D40511] hover:border-[#D40511]'
               }`}
             >
-              <div className='text-base sm:text-lg md:text-xl lg:text-2xl font-black'>{format(date, 'd')}</div>
-              <div className='text-[8px] sm:text-[10px] md:text-xs mt-0.5 sm:mt-1 md:mt-2 font-bold'>
-                {window.innerWidth < 640 
-                  ? (isOffDay ? 'OFF' : isSunday ? 'SUN' : 'WORK')
-                  : (isOffDay ? 'DAY OFF' : isSunday ? 'SUNDAY' : 'WORK DAY')
-                }
+              <div style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }} className='font-black'>
+                {format(date, 'd')}
+              </div>
+              <div style={{ fontSize: 'clamp(0.5rem, 0.8vw, 0.75rem)' }} className='mt-0.5 sm:mt-1 md:mt-2 font-bold'>
+                {isOffDay ? 'DAY OFF' : isSunday ? 'SUNDAY' : 'WORK DAY'}
               </div>
             </div>
           ))}
