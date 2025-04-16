@@ -1,13 +1,37 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { 
   Car,
-  BarChart3,
+  CalendarDays,
   Route,
   PiggyBank
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAuthenticated(!!session);
+    };
+    checkAuth();
+  }, []);
+
+  const handleCalendarClick = () => {
+    if (!isAuthenticated) {
+      router.push('/auth');
+    } else {
+      router.push('/authorized/calendar');
+    }
+  };
+
   return (
     <div className='min-h-screen bg-[#D40511]'>
       {/* Hero Section */}
@@ -65,15 +89,15 @@ export default function Home() {
             <p className='text-white/90 text-lg'>Track fuel costs, maintenance expenses, and other vehicle-related spending.</p>
           </div>
 
-          <div className='bg-[#D40511] p-8 rounded-lg shadow-2xl transition-all duration-300 hover:scale-105 group transform -rotate-1'>
+          <div onClick={handleCalendarClick} className='bg-[#D40511] p-8 rounded-lg shadow-2xl transition-all duration-300 hover:scale-105 group transform -rotate-1 cursor-pointer'>
             <div className='absolute top-0 left-0 w-full h-2 bg-[#FFCC00] transform origin-left scale-x-0 transition-transform group-hover:scale-x-100'></div>
             <div className='flex items-center gap-4 mb-4'>
               <div className='p-3 bg-[#FFCC00] rounded-lg transform rotate-3'>
-                <BarChart3 className='w-8 h-8 text-[#D40511]' />
+                <CalendarDays className='w-8 h-8 text-[#D40511]' />
               </div>
-              <h3 className='text-2xl font-black text-white uppercase'>Performance Analytics</h3>
+              <h3 className='text-2xl font-black text-white uppercase'>Day Off Calendar</h3>
             </div>
-            <p className='text-white/90 text-lg'>Get detailed insights into your driving patterns and vehicle performance.</p>
+            <p className='text-white/90 text-lg'>View and manage your work schedule and days off with our interactive calendar.</p>
           </div>
 
           <div className='bg-[#D40511] p-8 rounded-lg shadow-2xl transition-all duration-300 hover:scale-105 group transform rotate-1'>
