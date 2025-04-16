@@ -25,11 +25,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  // Allow authenticated users to access any page
+  // Prevent authenticated users from accessing auth page
+  if (session && request.nextUrl.pathname === '/auth') {
+    const redirectUrl = new URL('/', request.url);
+    return NextResponse.redirect(redirectUrl);
+  }
 
   return res;
 }
 
 export const config = {
-  matcher: ['/', '/authorized/:path*'],
+  matcher: ['/', '/auth', '/authorized/:path*'],
 };
