@@ -32,6 +32,7 @@ const formSchema = z.object({
 export function AuthForm() {
   const [isSignIn, setIsSignIn] = useState(true);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -45,23 +46,30 @@ export function AuthForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setError('');
+      setIsLoading(true);
+
       if (isSignIn) {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error: signInError } = await supabase.auth.signInWithPassword({
           email: values.email,
           password: values.password,
         });
-        if (error) throw error;
-        router.push('/authorized');
+        if (signInError) throw signInError;
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { error: signUpError } = await supabase.auth.signUp({
           email: values.email,
           password: values.password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
+          },
         });
-        if (error) throw error;
-        // Show success message or handle email verification
+        if (signUpError) throw signUpError;
       }
+
+      router.refresh();
     } catch (error: any) {
-      setError(error.message);
+      setError(error.message || 'An error occurred');
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -106,14 +114,15 @@ export function AuthForm() {
             />
             {error && <div className='text-sm text-red-500'>{error}</div>}
             <div className='space-y-2'>
-              <Button type='submit' className='w-full'>
-                {isSignIn ? 'Sign In' : 'Sign Up'}
+              <Button type='submit' className='w-full' disabled={isLoading}>
+                {isLoading ? 'Loading...' : isSignIn ? 'Sign In' : 'Sign Up'}
               </Button>
               <Button
                 type='button'
                 variant='ghost'
                 className='w-full'
                 onClick={() => setIsSignIn(!isSignIn)}
+                disabled={isLoading}
               >
                 {isSignIn
                   ? "Don't have an account? Sign Up"
