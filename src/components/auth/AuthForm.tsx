@@ -21,6 +21,8 @@ import { Input } from '../ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { supabase } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -29,6 +31,8 @@ const formSchema = z.object({
 
 export function AuthForm() {
   const [isSignIn, setIsSignIn] = useState(true);
+  const [error, setError] = useState('');
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,11 +42,26 @@ export function AuthForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    if (isSignIn) {
-      console.log('Sign In:', values);
-    } else {
-      console.log('Sign Up:', values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setError('');
+      if (isSignIn) {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: values.email,
+          password: values.password,
+        });
+        if (error) throw error;
+        router.push('/authorized');
+      } else {
+        const { error } = await supabase.auth.signUp({
+          email: values.email,
+          password: values.password,
+        });
+        if (error) throw error;
+        // Show success message or handle email verification
+      }
+    } catch (error: any) {
+      setError(error.message);
     }
   }
 
@@ -85,6 +104,7 @@ export function AuthForm() {
                 </FormItem>
               )}
             />
+            {error && <div className='text-sm text-red-500'>{error}</div>}
             <div className='space-y-2'>
               <Button type='submit' className='w-full'>
                 {isSignIn ? 'Sign In' : 'Sign Up'}
