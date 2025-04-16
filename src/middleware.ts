@@ -25,11 +25,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  // If there's a session and trying to access auth page
-  if (session && request.nextUrl.pathname === '/') {
-    const redirectUrl = new URL('/authorized', request.url);
-    return NextResponse.redirect(redirectUrl);
-  }
+  // Allow authenticated users to access any page
 
   return res;
 }

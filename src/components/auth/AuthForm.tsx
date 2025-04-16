@@ -65,9 +65,13 @@ export function AuthForm() {
         if (signUpError) throw signUpError;
       }
 
-      router.refresh();
-    } catch (error: any) {
-      setError(error.message || 'An error occurred');
+      if (isSignIn) {
+        router.push('/authorized');
+      } else {
+        router.push('/');
+      }
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsLoading(false);
     }
