@@ -71,8 +71,6 @@ const DayOffCalendar = () => {
         </div>
       </div>
 
-      {/* Important Notice */}
-
 
       {/* Calendar Section */}
       <div className='relative min-h-screen pb-24'>
