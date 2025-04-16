@@ -78,28 +78,37 @@ export function AuthForm() {
   }
 
   return (
-    <Card className='w-[350px]'>
-      <CardHeader>
-        <CardTitle>{isSignIn ? 'Sign In' : 'Sign Up'}</CardTitle>
-        <CardDescription>
+    <Card className='w-[400px] border-4 border-[#FFCC00] shadow-2xl transform hover:scale-[1.02] transition-all duration-300'>
+      <CardHeader className='bg-[#D40511] text-white pb-8'>
+        <div className='flex justify-center mb-6'>
+          <div className='bg-[#FFCC00] text-[#D40511] px-4 py-2 rounded font-black text-2xl transform -rotate-2 hover:rotate-0 transition-transform border-2 border-white inline-block'>
+            DHL
+          </div>
+        </div>
+        <CardTitle className='text-3xl font-black text-center mb-2'>{isSignIn ? 'Welcome Back!' : 'Join DHL Driver Assistant'}</CardTitle>
+        <CardDescription className='text-white/90 text-center text-lg'>
           {isSignIn
-            ? 'Enter your credentials to sign in'
-            : 'Create a new account to get started'}
+            ? 'Sign in to access your driver dashboard'
+            : 'Create your account to get started'}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className='pt-6 px-6'>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
             <FormField
               control={form.control}
               name='email'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className='text-[#D40511] font-bold uppercase text-sm'>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder='example@email.com' {...field} />
+                    <Input 
+                      placeholder='example@email.com' 
+                      {...field} 
+                      className='border-2 border-gray-200 h-12 text-lg focus:border-[#FFCC00] transition-all duration-300'
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-[#D40511] font-medium' />
                 </FormItem>
               )}
             />
@@ -108,29 +117,35 @@ export function AuthForm() {
               name='password'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className='text-[#D40511] font-bold uppercase text-sm'>Password</FormLabel>
                   <FormControl>
-                    <Input type='password' placeholder='******' {...field} />
+                    <Input 
+                      type='password' 
+                      placeholder='******' 
+                      {...field} 
+                      className='border-2 border-gray-200 h-12 text-lg focus:border-[#FFCC00] transition-all duration-300'
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className='text-[#D40511] font-medium' />
                 </FormItem>
               )}
             />
-            {error && <div className='text-sm text-red-500'>{error}</div>}
-            <div className='space-y-2'>
-              <Button type='submit' className='w-full' disabled={isLoading}>
-                {isLoading ? 'Loading...' : isSignIn ? 'Sign In' : 'Sign Up'}
+            {error && <p className='text-[#D40511] text-sm font-medium bg-red-50 p-3 rounded border border-red-100'>{error}</p>}
+            <div className='flex flex-col gap-3 pt-2'>
+              <Button 
+                type='submit' 
+                disabled={isLoading}
+                className='bg-[#D40511] hover:bg-[#FFCC00] text-white hover:text-[#D40511] h-12 text-lg font-black uppercase transition-all duration-300 cursor-pointer transform hover:scale-105'
+              >
+                {isLoading ? 'Processing...' : isSignIn ? 'Sign In' : 'Create Account'}
               </Button>
               <Button
                 type='button'
                 variant='ghost'
-                className='w-full'
                 onClick={() => setIsSignIn(!isSignIn)}
-                disabled={isLoading}
+                className='text-[#D40511] hover:text-[#D40511] hover:bg-[#FFCC00]/20 font-bold transition-all duration-300 cursor-pointer'
               >
-                {isSignIn
-                  ? "Don't have an account? Sign Up"
-                  : 'Already have an account? Sign In'}
+                {isSignIn ? 'Need an account? Sign Up' : 'Already have an account? Sign In'}
               </Button>
             </div>
           </form>
