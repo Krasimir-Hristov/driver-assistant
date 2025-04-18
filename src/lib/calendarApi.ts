@@ -16,11 +16,18 @@ export async function upsertModification(
   date: string,
   dayType: DayType
 ) {
-  const { data, error } = await supabase
+  // First try to delete any existing modification
+  await supabase
     .from('calendar_modifications')
-    .upsert({ user_id: userId, date, day_type: dayType })
+    .delete()
     .eq('user_id', userId)
     .eq('date', date);
+
+  // Then insert the new modification
+  const { data, error } = await supabase
+    .from('calendar_modifications')
+    .insert({ user_id: userId, date, day_type: dayType });
+
   if (error) throw error;
   return data;
 }
