@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { useSupabase } from '@/components/providers/SupabaseProvider';
 import { useEffect, useState } from 'react';
 
 export function Navbar() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const supabase = useSupabase();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -17,12 +19,12 @@ export function Navbar() {
     };
     checkAuth();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: string, session: any) => {
       setIsAuthenticated(!!session);
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [supabase.auth]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

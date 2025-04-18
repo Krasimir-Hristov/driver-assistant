@@ -21,7 +21,7 @@ import { Input } from '../ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { supabase } from '@/lib/supabase';
+import { useSupabase } from '../providers/SupabaseProvider';
 import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
@@ -34,6 +34,7 @@ export function AuthForm() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const supabase = useSupabase();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

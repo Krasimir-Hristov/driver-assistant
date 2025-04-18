@@ -1,24 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import WeeklyCalendar from '@/components/calendar/WeeklyCalendar';
-import { supabase } from '@/lib/supabase';
 
 const DayOffCalendar = () => {
   const [startWeek, setStartWeek] = useState<number>(1);
-  const router = useRouter();
-
-  // Check authentication
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        router.push('/auth');
-      }
-    };
-    checkAuth();
-  }, [router]);
 
   return (
     <div className='min-h-screen bg-[#D40511]'>

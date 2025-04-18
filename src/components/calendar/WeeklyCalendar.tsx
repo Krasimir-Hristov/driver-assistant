@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { weekOffDays } from '@/constants';
-import { DayType } from '@/types/calendar';
+import { DayType, CalendarModification } from '@/types/calendar';
 import DayModificationModal from './DayModificationModal';
+import { useSupabase } from '@/components/providers/SupabaseProvider';
+import { fetchUserModifications, upsertModification } from '@/lib/calendarApi';
 import {
   format,
   addDays,
@@ -21,10 +23,38 @@ type Props = {
 };
 
 const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
+  const supabase = useSupabase();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dayModifications, setDayModifications] = useState<Record<string, DayType>>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadModifications() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          setLoading(false);
+          return;
+        }
+
+        const modifications = await fetchUserModifications(supabase, user.id);
+        const modMap: Record<string, DayType> = {};
+        modifications.forEach(mod => {
+          modMap[mod.date] = mod.day_type;
+        });
+        setDayModifications(modMap);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load modifications');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadModifications();
+  }, [supabase.auth]);
 
   const calculateWeekNumber = (
     startWeek: number,
@@ -74,6 +104,27 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
 
   const handleNextMonth = () => {
     setCurrentMonth((prev) => addMonths(prev, 1));
+  };
+
+  const handleDayTypeChange = async (type: DayType) => {
+    if (!selectedDate) return;
+    
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user?.id) {
+        setError('Please sign in to modify calendar');
+        return;
+      }
+
+      await upsertModification(supabase, user.id, format(selectedDate, 'yyyy-MM-dd'), type);
+      setDayModifications(prev => ({
+        ...prev,
+        [format(selectedDate, 'yyyy-MM-dd')]: type,
+      }));
+      setIsModalOpen(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update modification');
+    }
   };
 
   return (
@@ -154,13 +205,7 @@ const WeeklyCalendar: React.FC<Props> = ({ startWeek }) => {
         <DayModificationModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onSelect={(type) => {
-            const dateStr = format(selectedDate, 'yyyy-MM-dd');
-            setDayModifications(prev => ({
-              ...prev,
-              [dateStr]: type
-            }));
-          }}
+          onSelect={handleDayTypeChange}
           currentDate={selectedDate}
           currentType={dates.find(d => d.date.getTime() === selectedDate.getTime())?.dayType || 'work'}
         />

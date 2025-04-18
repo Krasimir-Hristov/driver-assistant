@@ -9,12 +9,14 @@ import {
   PiggyBank
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { useSupabase } from '@/components/providers/SupabaseProvider';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const supabase = useSupabase();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -22,7 +24,7 @@ export default function Home() {
       setIsAuthenticated(!!session);
     };
     checkAuth();
-  }, []);
+  }, [supabase.auth]);
 
   const handleCalendarClick = () => {
     if (!isAuthenticated) {
